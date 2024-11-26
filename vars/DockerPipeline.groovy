@@ -1,4 +1,4 @@
-import .com.builds.Docker
+import com.builds.Docker
 
 def call(Map pipelineParams) {
     Docker docker = new Docker(this)
@@ -34,7 +34,7 @@ def call(Map pipelineParams) {
 
     }
     environment{
-        SERVICE_NAME = "eureka-server"
+        SERVICE_NAME = "${pipelineParams.APP_NAME}""
         POM_VERSION = readMavenPom().getVersion()
         POM_PACKAGING = readMavenPom().getPackaging()
         DOCKER_HUB = "docker.io/subhanicool01"
@@ -59,7 +59,9 @@ def call(Map pipelineParams) {
           }
             steps {
                script {
-                buildApp().call()
+                //buildApp().call()
+                echo "printing app_name"
+                println docker.buildApp("${env. SERVICE_NAME}")
                }            
             }
         }
