@@ -197,7 +197,8 @@ def imageValidation() {
        } 
        catch (error) {
           println ("Oops docker image is not available")
-          buildApp().call()
+          #buildApp().call()
+          docker.buildApp("${SERVICE_NAME}")
           dockerBuildandPush().call()
         }
     }
