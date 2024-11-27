@@ -44,6 +44,9 @@ def call(Map pipelineParams) {
         SONAR_URL = "http://34.68.126.198:9000"
         SONAR_TOKEN = credentials('sonar_creds')
         PUBLIC_IP = "34.41.246.17"
+        GKE_CLUSTER = "PREPROD_CLUSTER"
+        GKE_ZONE = "us-central1-a"
+        GKE_PROJECT = "PROJECT_NAME"
     }
     tools {
         maven 'Maven-3.8.8'
@@ -54,7 +57,7 @@ def call(Map pipelineParams) {
           steps {
             echo "executing in google cloud auth-login"
             script{
-              k8s.auth.login
+              k8s.auth.login ("${env.GKE_CLUSTER}", "${env.GKE_ZONE}", "${env.GKE_PROJECT}")
             }
           }
         stage("Build") {
